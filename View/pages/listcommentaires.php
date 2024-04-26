@@ -1,8 +1,8 @@
 <?php
-include 'C:\xampp\htdocs\mcv\Controller\BlogC.php';
+include 'C:\xampp\htdocs\mcv\Controller\CommentaireC.php';
 
-$blogC = new BlogC();
-$tab = $blogC->listBlogs();
+$blogC = new CommentaireC();
+$tab = $blogC->listCommentaires();
 ?>
 
 <!--
@@ -265,45 +265,36 @@ Wild Wander
       </div>
     </nav>
 
+<h1><center><strong>-List of Comments-</strong></center></h1>
+<table border="1" align="center" width="70%">
+    <tr>
+        <th>Comment ID</th>
+        <th>Message</th>
+        <th>Date</th>
+        <th>Blog ID</th>
+        <th>User ID</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
 
-
-    <h1><center><strong>-List of Blogs-</strong></center></h1>
-    <button onclick="location.href='addBlogs.php';">Add</button>
-    <table border="1" align="center" width="70%">
+    <?php foreach ($tab as $commentaire) { ?>
         <tr>
-            <th>idBlog</th>
-            <th>Titre</th>
-            <th>Contenu</th>
-            <th>Date Publication</th>
-            <th>Auteur</th>      
-                  <th> add comment</th>
+            <td><?= $commentaire['id']; ?></td>
+            <td><?= $commentaire['message']; ?></td>
+            <td><?= $commentaire['date']; ?></td>
+            <td><?= $commentaire['id_blog']; ?></td>
+            <td><?= $commentaire['id_utilisateur']; ?></td>
 
-            <th>Update</th>
-            <th>Delete</th>
+            <td align="center">
+              
+            <a href="updatecommentaires.php?idCommentaire=<?= $commentaire['id']; ?>"  >    <button> update</button> </a>
+            </td>
+            <td>
+                <a href="deletecommentaire.php?id=<?= $commentaire['id']; ?>">Delete</a>
+            </td>
         </tr>
-
-        <?php foreach ($tab as $blog) { ?>
-            <tr>
-                <td><?= $blog['idBlog']; ?></td>
-                <td><?= $blog['titre']; ?></td>
-                <td><?= $blog['contenu']; ?></td>
-                <td><?= $blog['date_publication']; ?></td>
-                <td><?= $blog['auteur']; ?></td>
-                <td>   <a href="addcommentaires.php?idBlog=<?= $blog['idBlog']; ?>"  >    <button> add comment</button> </a> </td>
-
-
-                <td align="center">
-                    <form method="POST" action="updateBlogs.php">
-                        <input type="submit" name="update" value="Update">
-                        <input type="hidden" value="<?= $blog['idBlog']; ?>" name="idBlog">
-                    </form>
-                </td>
-                <td>
-                    <a href="deleteBlogs.php?id=<?= $blog['idBlog']; ?>">Delete</a>
-                </td>
-            </tr>
-        <?php } ?>
-    </table>
+    <?php } ?>
+</table>
 
     
     <!-- End Navbar -->

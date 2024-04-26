@@ -1,24 +1,40 @@
 <?php
-include 'C:\xampp\htdocs\mcv\Controller\BlogC.php';
+include 'C:\xampp\htdocs\mcv\Controller\CommentaireC.php';
+include 'C:\xampp\htdocs\mcv\Model\Commentaire.php';
 
-$blogC = new BlogC();
-$tab = $blogC->listBlogs();
+$error = "";
+
+// Create an instance of the controller
+$commentaireC = new CommentaireC();
+$id=$_GET["idCommentaire"];
+$commentaires=$commentaireC->getById($id);
+
+if (
+
+    isset($_POST["message"]) 
+
+) {
+    if (
+        !empty($_POST['message']) 
+      
+    ) {
+        $commentaire = new Commentaire(
+            $_POST['message'],
+            $commentaires['date']
+            ,
+            $commentaires['id_blog'],
+            $commentaires['id_utilisateur']
+        );
+
+
+        $commentaireC->updateCommentaire($commentaire,$id);
+
+        header('Location:listCommentaires.php');
+    } else {
+        $error = "Missing information";
+    }
+}
 ?>
-
-<!--
-=========================================================
-* Material Dashboard 2 - v3.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -267,43 +283,49 @@ Wild Wander
 
 
 
-    <h1><center><strong>-List of Blogs-</strong></center></h1>
-    <button onclick="location.href='addBlogs.php';">Add</button>
-    <table border="1" align="center" width="70%">
-        <tr>
-            <th>idBlog</th>
-            <th>Titre</th>
-            <th>Contenu</th>
-            <th>Date Publication</th>
-            <th>Auteur</th>      
-                  <th> add comment</th>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Blog</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="style3.css" />
 
-            <th>Update</th>
-            <th>Delete</th>
-        </tr>
+</head>
 
-        <?php foreach ($tab as $blog) { ?>
+<body>
+<button><a href="listCommentaires.php">Back to list</a></button>
+<hr>
+
+<div id="error">
+    <?php echo $error; ?>
+</div>
+
+<?php
+if (isset($_GET['idCommentaire'])) {
+    $commentaire = $commentaireC->showCommentaire($_GET['idCommentaire']);
+?>
+
+    <form method="POST" id="formr">
+        <table>
+          
             <tr>
-                <td><?= $blog['idBlog']; ?></td>
-                <td><?= $blog['titre']; ?></td>
-                <td><?= $blog['contenu']; ?></td>
-                <td><?= $blog['date_publication']; ?></td>
-                <td><?= $blog['auteur']; ?></td>
-                <td>   <a href="addcommentaires.php?idBlog=<?= $blog['idBlog']; ?>"  >    <button> add comment</button> </a> </td>
-
-
-                <td align="center">
-                    <form method="POST" action="updateBlogs.php">
-                        <input type="submit" name="update" value="Update">
-                        <input type="hidden" value="<?= $blog['idBlog']; ?>" name="idBlog">
-                    </form>
-                </td>
+                <td><label for="message">Message :</label></td>
                 <td>
-                    <a href="deleteBlogs.php?id=<?= $blog['idBlog']; ?>">Delete</a>
+                    <input type="text" id="message" name="message" value="<?php echo $commentaire['message'] ?>" />
                 </td>
             </tr>
-        <?php } ?>
-    </table>
+           
+         
+
+            <td>
+                <button type="submit">Update</button>
+            </td>
+            <td>
+                <input type="reset" value="Reset">
+            </td>
+        </table>
+    </form>
+<?php } ?>
+
 
     
     <!-- End Navbar -->
@@ -433,6 +455,7 @@ Wild Wander
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  
   <script src="../assets/js/material-dashboard.min.js?v=3.1.0"></script>
 </body>
 
