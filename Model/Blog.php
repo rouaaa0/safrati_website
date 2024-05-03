@@ -10,14 +10,14 @@ class Blog
     private $likes;
     private $dislikes;
 
-    public function __construct(?int $id, ?string $titre, ?string $contenu, ?string $date, ?string $auteur,$rating)
+    public function __construct(?int $id, ?string $titre, ?string $contenu, ?string $date, ?string $auteur,)
     {
         $this->idBlog = $id;
         $this->titre = $titre;
         $this->contenu = $contenu;
         $this->date_publication = $date;
         $this->auteur = $auteur;
-        $this->rating = $rating;
+        //$this->rating = $rating;
 
     }
 
