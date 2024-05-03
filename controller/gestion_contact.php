@@ -98,8 +98,36 @@ function updateContact($contact, $id)
 
 
 
-}  
 
+
+
+//les metiers
+
+//fct tri
+function show_etat_metier()
+{
+    $sql = "SELECT * FROM contact ORDER BY 
+            CASE 
+                WHEN etat_contact = 'non traite' THEN 0
+                WHEN etat_contact = 'traiter' THEN 1
+                ELSE 2
+            END, etat_contact";
+
+    $config = new Config();
+    $db = $config->getConexion();
+
+    try {
+        $query = $db->prepare($sql);
+        $query->execute();
+
+        $notifications = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $notifications;
+    } catch (Exception $e) {
+        die('Error: ' . $e->getMessage());
+    }
+}
+
+}  
 
 
 

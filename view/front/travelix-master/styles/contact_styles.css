@@ -820,7 +820,7 @@ section
 	border: none;
 	outline: none;
 	background: transparent;
-	color: #FFFFFF;
+	color: #152a4b;
 	border-bottom: solid 2px #e1e1e1;
 }
 .contact_form_name
@@ -847,7 +847,7 @@ section
 	background: transparent;
 	font-size: 12px;
 	font-weight: 400;
-	color: #FFFFFF;
+	color: #152a4b;
 	border-bottom: solid 2px #e1e1e1;
 	padding-top: 11px;
 }
@@ -959,7 +959,7 @@ section
 	display: inline-block;
 	width: 47px;
 	height: 47px;
-	border: solid 2px #fa9e1b;
+	border: solid 2px #6caf3f;
 	border-radius: 50%;
 	text-align: center;
 	-webkit-transition: all 200ms ease;
