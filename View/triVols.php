@@ -1,9 +1,10 @@
 <?php
+// triVols.php
+
 include 'C:\xampp\htdocs\mcv\Controller\VolsC.php';
 
 $volsC = new VolsC();
-$tab = $volsC->listVols();
-
+$sortedList = $volsC->listVolsSortedByDateDesc();
 ?>
 
 <!DOCTYPE html>
@@ -12,16 +13,13 @@ $tab = $volsC->listVols();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Flights</title>
+    <title>Sorted List of Flights</title>
     <link rel="stylesheet" type="text/css" media="screen" href="style2.css" />
 </head>
 <body>
 
-    <h1><center><strong>-List of Flights-</strong></center></h1>
+    <h1><center><strong>-Sorted List of Flights-</strong></center></h1>
     <button onclick="location.href='addVols.php';">Add</button>
-    <button onclick="location.href='triVols.php';">trier le date</button>
-    <button onclick="location.href='statsVols.php';">stats</button>
-
     <table border="1" align="center" width="70%">
         <tr>
             <th>id_vols</th>
@@ -33,7 +31,7 @@ $tab = $volsC->listVols();
             <th>Delete</th>
         </tr>
 
-        <?php foreach ($tab as $vol) { ?>
+        <?php foreach ($sortedList as $vol) { ?>
             <tr>
                 <td><?= $vol['id_vols']; ?></td>
                 <td><?= $vol['compagne']; ?></td>
@@ -56,3 +54,4 @@ $tab = $volsC->listVols();
 
 </body>
 </html>
+

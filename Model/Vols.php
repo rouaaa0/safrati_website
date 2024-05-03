@@ -6,16 +6,14 @@ class Vols
     private ?string $depart = null;
     private ?string $destination = null;
     private ?string $dateDepart = null;
-    private ?float $prix = null;
 
-    public function __construct(?int $id, ?string $comp, ?string $dep, ?string $dest, ?string $date, ?float $price)
+    public function __construct(?int $id, ?string $comp, ?string $dep, ?string $dest, ?string $date)
     {
         $this->idVol = $id;
         $this->compagne = $comp;
         $this->depart = $dep;
         $this->destination = $dest;
         $this->dateDepart = $date;
-        $this->prix = $price;
     }
 
     public function getIdVol()
@@ -64,17 +62,6 @@ class Vols
     public function setDateDepart($dateDepart)
     {
         $this->dateDepart = $dateDepart;
-        return $this;
-    }
-
-    public function getPrix(): ?float
-    {
-        return $this->prix;
-    }
-
-    public function setPrix($prix)
-    {
-        $this->prix = $prix;
         return $this;
     }
 }

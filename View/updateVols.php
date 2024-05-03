@@ -12,24 +12,21 @@ if (
     isset($_POST["compagne"]) &&
     isset($_POST["depart"]) &&
     isset($_POST["destination"]) &&
-    isset($_POST["date_depart"]) &&
-    isset($_POST["prix"])
+    isset($_POST["date_depart"]) 
 ) {
     if (
         !empty($_POST["id_vols"]) &&
         !empty($_POST['compagne']) &&
         !empty($_POST["depart"]) &&
         !empty($_POST["destination"]) &&
-        !empty($_POST["date_depart"]) &&
-        !empty($_POST["prix"])
+        !empty($_POST["date_depart"]) 
     ) {
         $vol = new Vols(
             $_POST['id_vols'],
             $_POST['compagne'],
             $_POST['depart'],
             $_POST['destination'],
-            $_POST['date_depart'],
-            $_POST['prix']
+            $_POST['date_depart']
         );
 
         $volsC->updateVol($vol, $_POST['id_vols']);
@@ -96,13 +93,6 @@ if (
                         <input type="date" id="date_depart" name="date_depart" value="<?php echo $vol['date_depart'] ?>" /> 
                     </td>
                 </tr>
-                <tr>
-                    <td><label for="prix">Prix :</label></td>
-                    <td>
-                        <input type="text" id="prix" name="prix" value="<?php echo $vol['prix'] ?>" /> 
-                    </td>
-                </tr>
-
                 <td>
                     <button type="submit">Update</button>
                 </td>

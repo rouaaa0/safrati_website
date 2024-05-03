@@ -2,6 +2,7 @@
 
 require 'C:\xampp\htdocs\mcv\config.php';
 
+
 class VolsC
 {
 
@@ -16,6 +17,13 @@ class VolsC
         } catch (Exception $e) {
             die('Error:' . $e->getMessage());
         }
+    }
+    public function listVolsSortedByDateDesc()
+    {
+        $db = config::getConnexion();
+        $query = "SELECT * FROM vols ORDER BY date_depart ASC";
+        $statement = $db->query($query);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function deleteVol($id_vols)
@@ -36,7 +44,7 @@ class VolsC
     function addVol($vol)
     {
         $sql = "INSERT INTO vols  
-        VALUES (NULL,:compagne, :depart, :destination, :date_depart, :prix)";
+        VALUES (NULL,:compagne, :depart, :destination, :date_depart )";
         $db = config::getConnexion();
         try {
             $query = $db->prepare($sql);
@@ -45,7 +53,6 @@ class VolsC
                 'depart' => $vol->getDepart(),
                 'destination' => $vol->getDestination(),
                 'date_depart' => $vol->getDateDepart(),
-                'prix' => $vol->getPrix(),
             ]);
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -75,8 +82,7 @@ class VolsC
                 compagne = :compagne, 
                 depart = :depart, 
                 destination = :destination,
-                date_depart = :date_depart,
-                prix = :prix
+                date_depart = :date_depart
             WHERE id_vols = :id'
         );
         
@@ -86,7 +92,6 @@ class VolsC
             'depart' => $vol->getDepart(),
             'destination' => $vol->getDestination(),
             'date_depart' => $vol->getDateDepart(),
-            'prix' => $vol->getPrix()
         ]);
         
         echo $query->rowCount() . " records UPDATED successfully <br>";

@@ -11,15 +11,13 @@ if (
     isset($_POST["compagne"]) &&
     isset($_POST["depart"]) &&
     isset($_POST["destination"]) &&
-    isset($_POST["date_depart"]) &&
-    isset($_POST["prix"])
+    isset($_POST["date_depart"]) 
     ) {
       if (
         !empty($_POST['compagne']) &&
         !empty($_POST["depart"]) &&
         !empty($_POST["destination"]) &&
-        !empty($_POST["date_depart"]) &&
-        !empty($_POST["prix"])
+        !empty($_POST["date_depart"]) 
         ) 
         {
           $vol = new Vols(
@@ -27,8 +25,7 @@ if (
             $_POST['compagne'],
             $_POST['depart'],
             $_POST['destination'],
-            $_POST['date_depart'],
-            $_POST['prix']
+            $_POST['date_depart']
           );
         
         $volsC->addVol($vol);
@@ -45,7 +42,7 @@ if (
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Safrti Registration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" media="screen" href="style3.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
   </head>
 
   <body>
@@ -61,56 +58,56 @@ if (
           <input type="text" placeholder="Depart" id="depart" name="depart" />
           <input type="text" placeholder="Destination" id="destination" name="destination" />
           <input type="date" placeholder="Date Depart" id="date_depart" name="date_depart" />
-          <input type="text" placeholder="Prix" id="prix" name="prix" />
+
           <button type="submit">Add Flight</button>
         </form>
       </div>
     </div>
-
+    
     <script>
       var a = console.log.bind(document);
       a(3 * 4);
       a("Hello!");
       a(true);
-
-      /* FONCTION VERIF SIGN UP*/
       function verif_Up(){
         let compagne =document.getElementById('compagne').value;
         let depart =document.getElementById('depart').value;
         let destination=document.getElementById('destination').value;
         let date_depart=document.getElementById('date_depart').value;
-        let prix=document.getElementById('prix').value;
-        
         if (compagne=='')
         {
           document.getElementById('compagne').value='Invalid Compagne!';
           document.getElementById('compagne').style.color='red';
           return false;
         }
-        if (depart=='')
+        if (depart == '' || depart !== 'Tunes') 
         {
-          document.getElementById('depart').value='Invalid Depart!';
-          document.getElementById('depart').style.color='red';
-          return false;
-        }
+        document.getElementById('depart').value = 'Le depar obliguatoire Tunes pour le moment';
+        return false;
+       }
         if (destination=='')
         {
           document.getElementById('destination').value='Invalid Destination!';
           document.getElementById('destination').style.color='red';
           return false;
         }
-        if (date_depart=='')
-        {
-          document.getElementById('date_depart').value='Invalid Date Depart!';
-          document.getElementById('date_depart').style.color='red';
-          return false;
+        if (date_depart == '') {
+        document.getElementById('date_depart').value = 'Invalid Date Depart!';
+        document.getElementById('date_depart').style.color = 'red';
+        return false;
+    } else {
+        let currentDate = new Date();
+        let inputDate = new Date(date_depart);
+                if (inputDate <= currentDate) {
+            document.getElementById('date_depart').value = 'Invalid Date Depart!';
+            document.getElementById('date_depart').style.color = 'red';
+            return false;
         }
-        if (prix=='')
-        {
-          document.getElementById('prix').value='Invalid Prix!';
-          document.getElementById('prix').style.color='red';
-          return false;
-        }
+    }
+
+    return true;
+
+
       }
     </script>
   </body>
