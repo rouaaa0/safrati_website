@@ -1,7 +1,7 @@
 <!---------------------- voir reclamation imta3 il client  --------------------------->
 <?php
 include 'C:/xampp/htdocs/mcv/controller/gestion_contact.php';
-
+include_once("C:/xampp/htdocs/mcv/Model/contact.php");
 
 $contact_gestion = new contact_gestion();
 

@@ -1,28 +1,50 @@
 <!---------------------- liste reclamation --------------------------->
 <?php
 
-
 include 'C:/xampp/htdocs/mcv/controller/gestion_contact.php';
 $contact_gestion = new contact_gestion();
 
-
-
-
-
-
-// inchoufou kan delete mawjoud wala le 
-if (isset($_GET["delete"]) && isset($_GET["id"])) {
-  $contact_gestion->deleteContact($_GET["id"]);
-
+// Function to call API and filter profanity// Function to filter profanity
+function filterProfanity($text) {
+  $api_url = 'https://api.api-ninjas.com/v1/profanityfilter';
+  $api_key = 'eqeZSzQotb6s8VaVQelkmA==Gohn4DzE2o7wzPE1';
+  
+  // Construct the URL with parameters
+  $url = $api_url . '?text=' . urlencode($text);
+  
+  // Set up HTTP headers
+  $options = array(
+      'http' => array(
+          'header' => "Content-Type: application/json\r\n" . "X-Api-Key: $api_key\r\n",
+          'method' => 'GET'
+      )
+  );
+  
+  // Create a context for stream
+  $context = stream_context_create($options);
+  
+  // Make the request and get the response
+  $result = file_get_contents($url, false, $context);
+  
+  // Check if request was successful
+  if ($result !== false) {
+      // Decode the JSON response
+      $response = json_decode($result, true);
+      if (isset($response['censored'])) {
+          // Return the censored text
+          return $response['censored'];
+      } else {
+          // Return the original text if censored text is not present in response
+          return $text;
+      }
+  } else {
+      // Return the original text if request failed
+      return $text;
+  }
 }
 
-
-//$list = $contact_gestion->listContact();
-
-$list = $contact_gestion->show_etat_metier( );
-
-
-
+// Fetch and display your contact list
+$list = $contact_gestion->show_etat_metier();
 ?>
 
 <!DOCTYPE html>
@@ -320,7 +342,8 @@ User Management  </title>
                     
                         <td><?= $contact['date_envoie']; ?></td>
 
-                        <td class="talwin"><?= $contact['etat_contact']; ?></td>
+                        <td class="talwin"><?= filterProfanity($contact['etat_contact']); ?></td>
+
                         
                         
                         <td>

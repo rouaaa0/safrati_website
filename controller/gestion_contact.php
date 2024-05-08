@@ -161,6 +161,60 @@ class reponse_gestion
   
 }
 
+function listeReponse_idR($idContact)
+{
+    $sql = "SELECT * from reponse where idContact =  idContact";
+    $config = new Config();
+    $db = $config->getConexion();
+    try {
+        $query = $db->prepare($sql);
+        $query->bindParam(':idContact', $idContact);
+        $query->execute();
+
+        $notifications = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $notifications;
+    } catch (Exception $e) {
+        die('Error: ' . $e->getMessage());
+    }
+}
+
+function updateReponseEtat($idContact, $etat)
+{
+    try {
+        $config = new Config();
+        $db = $config->getConexion();
+        
+        $query = $db->prepare('UPDATE reponse SET etat_rep = :etat_rep WHERE idContact = :idContact');
+        $query->execute([
+            'etat_rep' => $etat,
+            'idContact' => $idContact,
+        ]);
+        
+        // echo $query->rowCount() . " records UPDATED successfully <br>";
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+}
+// kan ifasa5ha il user il reponse il i9dom im3ach yo8hrou
+function voir_repon($idContact ,$etat_rep)
+{
+    $sql = "SELECT * FROM reponse WHERE idContact = :idContact AND etat_rep = :etat_rep";
+    $config = new Config();
+    $db = $config->getConexion();
+    try {
+        $query = $db->prepare($sql);
+        $query->bindParam(':idContact', $idContact);
+        $query->bindParam(':etat_rep', $etat_rep);
+
+        $query->execute();
+
+        $notifications = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $notifications;
+    } catch (Exception $e) {
+        die('Error: ' . $e->getMessage());
+    }
+}
+
 
 
 

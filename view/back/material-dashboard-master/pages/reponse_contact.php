@@ -1,13 +1,13 @@
 <?php
 include 'C:/xampp/htdocs/mcv/controller/gestion_contact.php';
-
+include_once("C:/xampp/htdocs/mcv/Model/contact.php");
 
 /*---------------------- voiir et rep contact imta3 il client  ---------------------------*/
 $contact_gestion = new contact_gestion();
 
 
 // Fetch reclamation by id
-$contact = $contact_gestion->showContact($_GET["id"]);
+$contact = $contact_gestion->showContact($_GET["id_contact"]);
 
 /*************************update contact ***********************/
 
@@ -36,7 +36,7 @@ if (isset($_POST["id"])&& isset($_POST["repense"]) ) {
         $contact_gestion->updateContact($ContactU, $_POST["id"]);
       
 
-       // he8a bich yajouti fi tableau il reponse
+       // he8a bich yajouti fi tableau il reponse(jointure)
        $reponse = new reponse(null,$contact["id_contact"],$_POST['repense'] , new DateTime($curentDate_r) ); 
        $reponse_gestion->addReponse($reponse);
 
