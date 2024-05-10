@@ -1,6 +1,6 @@
 <?php
 
-require 'C:\xampp\htdocs\mcv\config.php';
+require_once 'C:\xampp\htdocs\mcv\config.php';
 
 class BlogC
 {
@@ -17,6 +17,30 @@ class BlogC
             die('Error:' . $e->getMessage());
         }
     }
+    function tridscu()
+    {
+        $sql = "SELECT * FROM blogs ORDER BY date_publication DESC";
+        $db = config::getConnexion();
+        try {
+            $liste = $db->query($sql);
+            return $liste;
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        }
+    }
+
+    function triascu()
+    {
+        $sql = "SELECT * FROM blogs ORDER BY date_publication ASC";
+        $db = config::getConnexion();
+        try {
+            $liste = $db->query($sql);
+            return $liste;
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        }
+    }
+    
 
     function deleteBlog($idBlog)
     {
@@ -35,8 +59,8 @@ class BlogC
     
     function addBlog($blog)
     {
-        $sql = "INSERT INTO blogs  
-        VALUES (NULL, :titre, :contenu, :date_publication, :auteur)";
+        $sql = "INSERT INTO blogs (titre, contenu, date_publication, auteur)  
+        VALUES (:titre, :contenu, :date_publication, :auteur)";
         $db = config::getConnexion();
         try {
             $query = $db->prepare($sql);
@@ -91,5 +115,36 @@ class BlogC
             echo 'Error: ' . $e->getMessage(); // Output the error message for debugging
         }
     }
+    public function incrementLikes($idBlog)
+    {
+        $sql = "UPDATE blogs SET likes = likes + 1 WHERE idBlog = ?";
+        $db = config::getConnexion();
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$idBlog]);
+    }
 
+    public function incrementDislikes($idBlog)
+    {
+        $sql = "UPDATE blogs SET dislikes = dislikes + 1 WHERE idBlog = ?";
+        $db = config::getConnexion();
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$idBlog]);
+    }
+
+    public function decrementLikes($idBlog)
+    {
+        $sql = "UPDATE blogs SET likes = likes - 1 WHERE idBlog = ?";
+        $db = config::getConnexion();
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$idBlog]);
+    }
+
+    public function decrementDislikes($idBlog)
+    {
+        $sql = "UPDATE blogs SET dislikes = dislikes - 1 WHERE idBlog = ?";
+        $db = config::getConnexion();
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$idBlog]);
+    }
+    
 }

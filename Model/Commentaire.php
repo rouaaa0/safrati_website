@@ -8,11 +8,13 @@ class Commentaire {
     private $id_blog;
     private $id_utilisateur;
 
+    private $rating;
     public function __construct($message, $date, $id_blog, $id_utilisateur) {
         $this->message = $message;
         $this->date = $date;
         $this->id_blog = $id_blog;
         $this->id_utilisateur = $id_utilisateur;
+
     }
 
     // Getter and setter methods for ID
@@ -22,6 +24,14 @@ class Commentaire {
 
     public function setId($id) {
         $this->id = $id;
+    }
+
+    public function getrating() {
+        return $this->rating;
+    }
+
+    public function setrating($rating) {
+        $this->rating = $rating;
     }
 
     // Getter and setter methods for Message
