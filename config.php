@@ -9,8 +9,8 @@ class config
         if (!isset(self::$pdo)) {
             try {
                 self::$pdo = new PDO(
-                    'mysql:host=localhost;dbname=gestionhebergement',
-                    'root',
+                     'mysql:host=localhost;dbname=esprit',
+                     'root',
                     '',
                     [
                         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

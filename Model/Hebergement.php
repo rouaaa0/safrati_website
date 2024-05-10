@@ -1,67 +1,85 @@
 <?php
 class Hebergement
 {
-    private ?int $idHeberg = null;
-    private ?string $nom = null;
-    private ?string $type = null;
-    private ?string $lieux = null;
-    private ?float $prix = null;
+public $idHeberg;
+public $nom;
+    public $type;
+    public $lieux;
+    public $prix;
+    public $offreId; // Added foreign key column
 
-    public function __construct(?int $id, ?string $nom, ?string $type, ?string $lieux, ?float $prix)
+    public function __construct($nom = '', $type = '', $lieux = '', $prix = '', $userId = '', $offreId = '') // Updated constructor
     {
-        $this->idHeberg = $id;
         $this->nom = $nom;
         $this->type = $type;
         $this->lieux = $lieux;
         $this->prix = $prix;
+        $this->userId = $userId;
+        $this->offreId = $offreId; // Set the value of offreId
     }
 
-    public function getIdHeberg()
+    public function getOffreId()
     {
-        return $this->idHeberg;
+        return $this->offreId;
     }
 
-    public function getNom()
+    public function setOffreId($offreId)
     {
-        return $this->nom;
+        $this->offreId = $offreId;
     }
 
-    public function setNom($nom)
-    {
-        $this->nom = $nom;
-        return $this;
-    }
+public function getIdHeberg()
+{
+return $this->idHeberg;
+}
 
-    public function getType()
-    {
-        return $this->type;
-    }
+public function getNom()
+{
+return $this->nom;
+}
 
-    public function setType($type)
-    {
-        $this->type = $type;
-        return $this;
-    }
+public function setNom($nom)
+{
+$this->nom = $nom;
+}
 
-    public function getLieux()
-    {
-        return $this->lieux;
-    }
+public function getType()
+{
+return $this->type;
+}
 
-    public function setLieux($lieux)
-    {
-        $this->lieux = $lieux;
-        return $this;
-    }
+public function setType($type)
+{
+$this->type = $type;
+}
 
-    public function getPrix(): ?float
-    {
-        return $this->prix;
-    }
+public function getLieux()
+{
+return $this->lieux;
+}
 
-    public function setPrix($prix)
-    {
-        $this->prix = $prix;
-        return $this;
-    }
+public function setLieux($lieux)
+{
+$this->lieux = $lieux;
+}
+
+public function getPrix()
+{
+return $this->prix;
+}
+
+public function setPrix($prix)
+{
+$this->prix = $prix;
+}
+
+public function getUserId()
+{
+return $this->userId;
+}
+
+public function setUserId($userId)
+{
+$this->userId = $userId;
+}
 }

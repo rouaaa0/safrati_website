@@ -7,28 +7,48 @@ $error = "";
 // Create an instance of the controller
 $hebergementC = new HebergementC();
 
+include 'C:\xampp\htdocs\hebergement\Controller\UserC.php';
+include '../Controller/OffreC.php';
+$userC = new UserC();
+$offreC = new OffreC();
+$offres = $offreC->AfficherOffre();
+$users = $userC->AfficherUser();
+
 if (
-    isset($_POST["idheberg"]) &&
     isset($_POST["nom"]) &&
     isset($_POST["type"]) &&
     isset($_POST["lieux"]) &&
-    isset($_POST["prix"])
+    isset($_POST["prix"]) &&
+    isset($_POST["user_id"]) &&
+    isset($_POST["offre_id"])
 ) {
+    echo "<script>alert('hello');</script>";
+
     if (
-        !empty($_POST["idheberg"]) &&
         !empty($_POST['nom']) &&
         !empty($_POST["type"]) &&
         !empty($_POST["lieux"]) &&
-        !empty($_POST["prix"])
+        !empty($_POST["prix"]) &&
+        !empty($_POST["user_id"]) &&
+        !empty($_POST["offre_id"])
     ) {
         $hebergement = new Hebergement(
-            $_POST['idheberg'],
             $_POST['nom'],
             $_POST['type'],
             $_POST['lieux'],
-            $_POST['prix']
+            $_POST['prix'],
+            $_POST['user_id'],
+            $_POST['offre_id']
         );
 
+        $hebergement->setUserId($_POST['user_id']);
+        $hebergement->setNom($_POST['nom']);
+        $hebergement->setType($_POST['type']);
+        $hebergement->idHeberg = $_POST['idheberg'];
+        $hebergement->setLieux($_POST['lieux']);
+        $hebergement->setPrix($_POST['prix']);
+        $hebergement->nom = $_POST['nom'];
+        $hebergement->setOffreId($_POST['offre_id']);
         $hebergementC->updateHebergement($hebergement, $_POST['idheberg']);
 
         header('Location:listHebergement.php');
@@ -353,7 +373,36 @@ User Management  </title>
       <input type="text" class="form-control"  id="type" name="type" value="<?php echo $hebergement['type'] ?>" />
 
     </div>
-        
+            <div class="input-group input-group-outline my-3">
+                <select class="form-select" id="user_id" name="user_id">
+                    <option value="">Select User</option>
+                    <?php
+                    foreach ($users as $user) {
+                        if($user['idUser']==$hebergement['user_id']){
+                            echo '<option value="' . $user['idUser'] . '" selected>' . $user['username'] . '</option>';
+                        }else
+                        {
+                        echo '<option value="' . $user['idUser'] . '">' . $user['username'] . '</option>';
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="input-group input-group-outline my-3">
+                <select class="form-select" id="offre_id" name="offre_id">
+                    <option value="">Select User</option>
+                    <?php
+                    foreach ($offres as $offre) {
+                        if($offre['ID_offre']==$hebergement['offre_id']){
+                            echo '<option value="' . $offre['ID_offre'] . '" selected>' . $offre['nom_offre'] . '</option>';
+                        }else
+                        {
+                            echo '<option value="' . $offre['ID_offre'] . '" selected>' . $offre['nom_offre'] . '</option>';
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
     <div class="input-group input-group-outline my-3 focused is-focused" >
       <label class="form-label">Lieux</label>
       <input type="text" class="form-control" id="lieux" name="lieux" value="<?php echo $hebergement['lieux'] ?>" />
@@ -377,8 +426,23 @@ User Management  </title>
         let type = document.getElementById('type').value;
         let lieux = document.getElementById('lieux').value;
         let prix = document.getElementById('prix').value;
-        var numberRegex = /^\d+$/;  
+        var numberRegex = /^\d+(\.\d+)?$/;
+        let user = document.getElementById('user_id').value;
+        if (user==='') {
+            document.getElementById('user_id').classList.add('is-invalid');
+            document.getElementById('user_id').style.color="red";
 
+            console.log("no user is selected");
+            return false;
+        }
+        let offre = document.getElementById('offre_id').value;
+        if (offre==='') {
+            document.getElementById('offre_id').classList.add('is-invalid');
+            document.getElementById('offre_id').style.color="red";
+
+            console.log("no offre is selected");
+            return false;
+        }
         console.log(numberRegex.test(prix));
         if (nom === '') {
             document.getElementById('nom').parentElement.classList.add('is-invalid');

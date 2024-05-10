@@ -6,26 +6,39 @@ include 'C:\xampp\htdocs\hebergement\Model\Hebergement.php';
 $error = "";
 $hebergement = null;
 $hebergementC = new HebergementC();
+include '../Controller/OffreC.php';
+include 'C:\xampp\htdocs\hebergement\Controller\UserC.php';
+
+$userC = new UserC();
+$offreC = new OffreC();
+$users = $userC->AfficherUser();
+$offres = $offreC->AfficherOffre();
 
 if (
     isset($_POST["nom"]) &&
     isset($_POST["type"]) &&
     isset($_POST["lieux"]) &&
-    isset($_POST["prix"])
+    isset($_POST["prix"]) &&
+    isset($_POST["user_id"]) &&
+    isset($_POST["offre_id"])
 ) {
     if (
         !empty($_POST['nom']) &&
         !empty($_POST["type"]) &&
         !empty($_POST["lieux"]) &&
-        !empty($_POST["prix"])
+        !empty($_POST["prix"]) &&
+        !empty($_POST["user_id"]) &&
+        !empty($_POST["offre_id"])
     ) {
         $hebergement = new Hebergement(
-            null,
             $_POST['nom'],
             $_POST['type'],
             $_POST['lieux'],
-            $_POST['prix']
+            $_POST['prix'],
+            $_POST['user_id'],
+            $_POST['offre_id']
         );
+        $hebergement->setOffreId($_POST['offre_id']);
 
         $hebergementC->addHebergement($hebergement);
         $error = "<center><strong><h3>Hebergement added successfully!</h3></strong></center>";
@@ -340,7 +353,27 @@ User Management  </title>
       <input type="text" class="form-control"  id="type" name="type" />
 
     </div>
-        
+
+            <div class="input-group input-group-outline my-3">
+                <select class="form-select" id="user_id" name="user_id">
+                    <option value="">Select User</option>
+                    <?php
+                    foreach ($users as $user) {
+                        echo '<option value="' . $user['idUser'] . '">' . $user['username'] . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="input-group input-group-outline my-3">
+                <select class="form-select" id="offre_id" name="offre_id">
+                    <option value="">Select Offre</option>
+                    <?php
+                    foreach ($offres as $offre) {
+                        echo '<option value="' . $offre['ID_offre'] . '">' . $offre['nom_offre'] . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
     <div class="input-group input-group-outline my-3">
       <label class="form-label">Lieux</label>
       <input type="text" class="form-control" id="lieux" name="lieux" />
@@ -364,6 +397,14 @@ User Management  </title>
         let type = document.getElementById('type').value;
         let lieux = document.getElementById('lieux').value;
         let prix = document.getElementById('prix').value;
+        let user = document.getElementById('user_id').value;
+        if (user==='') {
+            document.getElementById('user_id').classList.add('is-invalid');
+            document.getElementById('user_id').style.color="red";
+
+            console.log("no user is selected");
+            return false;
+        }
         var numberRegex = /^\d+$/;  
 
         console.log(numberRegex.test(prix));
@@ -391,6 +432,7 @@ User Management  </title>
             document.getElementById('prix').style.color = 'red';
             return false;
         }
+        return true;
     }
 </script>        
      

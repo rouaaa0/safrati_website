@@ -15,10 +15,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-include 'C:\xampp\htdocs\hebergement\Controller\HebergementC.php';
-
+include __DIR__.'/..\Controller\HebergementC.php';
+include __DIR__.'/..\Controller\UserC.php';
+include __DIR__.'/../Controller/OffreC.php';
 $hebergementC = new HebergementC();
+
+if(isset($_GET['attribute']) && isset($_GET['query']))
+{
+$attribute = $_GET['attribute'] ?? ''; // Get the selected attribute from the URL parameter
+$query = $_GET['query'] ?? ''; // Get the search query from the URL parameter
+
+
+if (!empty($attribute) && !empty($query)) {
+    $hebergements = $hebergementC->getByAttribute($attribute, $query);
+} else {
+    $hebergements = $hebergementC->listHebergements();
+}
+
+}else{
 $hebergements = $hebergementC->listHebergements();
+}
 ?>
 
 <head>
@@ -273,11 +289,25 @@ User Management  </title>
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                  <form action="listHebergement.php" method="GET">
+                      <div class="form-group mx-5">
+                          <label class="mr-2">Search by Attribute:</label>
+                          <select id="searchAttribute" class="form-control mr-2" name="attribute">
+                              <option value="nom">nom</option>
+                              <option value="type">type</option>
+                              <option value="lieux">lieux</option>
+                              <option value="prix">prix</option>
+                          </select>
+                          <input id="searchInput" type="text" class="form-control" placeholder="Search..." name="query">
+                          <button type="submit" class="btn btn-outline-primary">Search</button>
+                      </div>
+                  </form>
                 <h6 class="text-white text-capitalize ps-3">Hebergement table</h6>
                 <button class="btn btn-primary" style="position:absolute; right:20px;top:20px;" onclick="location.href='addHebergement.php';">Add</button>
 
               </div>
             </div>
+
             <div class="card-body px-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
@@ -289,7 +319,10 @@ User Management  </title>
             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Type</th>
             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lieux</th>
             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Prix</th>
-            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Update</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User email</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Offre</th>
+
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Update</th>
             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delete</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
@@ -302,7 +335,32 @@ User Management  </title>
                 <td ><span class="text-secondary text-xs font-weight-bold"><?= $hebergement['type']; ?></span></td>
                 <td ><span class="text-secondary text-xs font-weight-bold"><?= $hebergement['lieux']; ?></span></td>
                 <td ><span class="text-secondary text-xs font-weight-bold"><?= $hebergement['prix']; ?></span></td>
+                <td>
+                    <?php
 
+                    $userC = new UserC();
+                    $user = $userC->RecupererUser($hebergement['user_id']);
+
+                    if ($user) {
+                        echo '<span class="text-secondary text-xs font-weight-bold">' . $user['email'] . '</span>';
+                    } else {
+                        echo '<span class="text-secondary text-xs font-weight-bold">User not found</span>';
+                    }
+                    ?>
+                </td>
+                <td>
+                    <?php
+
+                    $offreC = new OffreC();
+                    $offre = $offreC->Recupereroffre($hebergement['offre_id']);
+
+                    if ($offre) {
+                        echo '<span class="text-secondary text-xs font-weight-bold">' . $offre['nom_offre'] . '</span>';
+                    } else {
+                        echo '<span class="text-secondary text-xs font-weight-bold">Offre not found</span>';
+                    }
+                    ?>
+                </td>
                 <td align="center">
                     <form method="POST" action="updateHebergement.php">
                         <input class="btn btn-info" type="submit" name="update" value="Update">
