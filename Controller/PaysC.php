@@ -80,6 +80,20 @@ class PaysC
             die('Error:' . $e->getMessage());
         }
     }
+    public function getPayys($nomPays) {
+        // Code pour récupérer les détails du pays
+        // Supposons que $result contient les détails du pays, y compris la latitude et la longitude
+    
+        // Par exemple, si les données de latitude et de longitude sont stockées dans des clés distinctes dans $result
+        $pays = [
+            'nom_Pays' => $result['nom_Pays'],
+            'latitude' => $result['latitude'],
+            'longitude' => $result['longitude']
+            // Autres détails du pays
+        ];
+    
+        return $pays;
+    }
 }
 
 ?>

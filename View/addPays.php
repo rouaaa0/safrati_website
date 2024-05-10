@@ -5,14 +5,12 @@ include 'C:\xampp\htdocs\mcv\Model\Pays.php';
 
 $error = "";
 $pays = null;
-$paysC = new PaysC(); // Create an instance of the country controller
+$paysC = new PaysC(); 
 
-// Check if the form is submitted
 if (
     isset($_POST["nomPays"]) &&
     isset($_POST["prix"])
 ) {
-    // Check if the fields are not empty
     if (
         !empty($_POST['nomPays']) &&
         !empty($_POST['prix'])
@@ -23,10 +21,7 @@ if (
         );
         $paysC->addPays($pays);
         $error = "<center><strong><h3>Country added successfully!</h3></strong></center>";
-    } else {
-        // Display an error message if any fields are empty
-        $error = "All fields must be filled!";
-    }
+    } 
 }
 ?>
 

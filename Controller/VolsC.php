@@ -18,7 +18,7 @@ class VolsC
             die('Error:' . $e->getMessage());
         }
     }
-    public function listVolsSortedByDateDesc()
+    public function tri()
     {
         $db = config::getConnexion();
         $query = "SELECT * FROM vols ORDER BY date_depart ASC";
@@ -72,7 +72,40 @@ class VolsC
             die('Error: ' . $e->getMessage());
         }
     }
-
+    
+        // Autres méthodes de votre classe...
+    
+        public function searchVolsByCompagnie($compagnie)
+        {
+            // Préparez la requête SQL pour rechercher les vols par compagnie aérienne
+            $sql = "SELECT * FROM vols WHERE compagne LIKE :compagnie";
+    
+            // Obtenez la connexion à la base de données
+            $db = config::getConnexion();
+    
+            try {
+                // Préparez la requête
+                $stmt = $db->prepare($sql);
+    
+                // Lier le paramètre
+                $compagnieParam = "%$compagnie%"; // Recherche partielle
+                $stmt->bindParam(':compagnie', $compagnieParam, PDO::PARAM_STR);
+    
+                // Exécutez la requête
+                $stmt->execute();
+    
+                // Récupérez les résultats
+                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+                // Retournez les résultats
+                return $results;
+            } catch (PDOException $e) {
+                // En cas d'erreur, affichez un message d'erreur et retournez null
+                echo 'Erreur: ' . $e->getMessage();
+                return null;
+            }
+        }
+    
     function updateVol($vol, $id_vols)
 {   
     try {

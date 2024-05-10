@@ -4,7 +4,7 @@
 include 'C:\xampp\htdocs\mcv\Controller\VolsC.php';
 
 $volsC = new VolsC();
-$sortedList = $volsC->listVolsSortedByDateDesc();
+$sortedList = $volsC->tri();
 ?>
 
 <!DOCTYPE html>
@@ -13,13 +13,16 @@ $sortedList = $volsC->listVolsSortedByDateDesc();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorted List of Flights</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="style2.css" />
+    <title>tri List of vols</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
 </head>
 <body>
 
-    <h1><center><strong>-Sorted List of Flights-</strong></center></h1>
+    <h1><center><strong>-Liste Trier par date-</strong></center></h1>
+    <button onclick="location.href='statsVols.php';">stats</button>
     <button onclick="location.href='addVols.php';">Add</button>
+    <button onclick="location.href='listVols.php';">list Vols no trier</button>
+
     <table border="1" align="center" width="70%">
         <tr>
             <th>id_vols</th>

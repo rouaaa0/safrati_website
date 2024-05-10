@@ -5,37 +5,26 @@ include 'C:\xampp\htdocs\mcv\Model\Pays.php';
 
 $error = "";
 
-$paysC = new PaysC(); // Créer une instance du contrôleur des pays
-
-// Vérifier si le formulaire est soumis
+$paysC = new PaysC();
 if (
     isset($_POST["nomPays"]) &&
     isset($_POST["prix"])
 ) {
-    // Vérifier si les champs ne sont pas vides
     if (
         !empty($_POST['nomPays']) &&
         !empty($_POST['prix'])
     ) {
-        // Créer un nouvel objet Pays avec les données du formulaire
         $pays = new Pays(
             $_POST['nomPays'],
             $_POST['prix']
         );
-
-        // Mettre à jour les informations du pays dans la base de données
         $paysC->updatePays($pays, $_POST['ancienNomPays']);
-
-        // Rediriger vers une autre page ou afficher un message de succès
         header("Location: listPays.php");
         exit();
     } else {
-        // Afficher un message d'erreur si des champs sont vides
         $error = "Tous les champs doivent être remplis!";
     }
 }
-
-// Récupérer les informations du pays à mettre à jour
 if(isset($_POST['nomPays'])) {
     $nomPays = $_POST['nomPays'];
     $pays = $paysC->getPays($nomPays);
@@ -48,7 +37,7 @@ if(isset($_POST['nomPays'])) {
 <head>
     <meta charset="utf-8">
     <title>Mettre à jour un pays</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="style3.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
 </head>
 <body>
 

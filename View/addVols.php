@@ -46,7 +46,10 @@ if (
   </head>
 
   <body>
-  <button onclick="location.href='listVols.php';">go to list</button>
+    
+  <button onclick="location.href='listVols.php';">go to list Vols</button>
+  <button onclick="location.href='calendarDate.php';">Voir la calendrier</button>
+
     <div id="error">
         <?php echo $error; ?>
     </div>
@@ -57,18 +60,18 @@ if (
           <input type="text"  placeholder="Compagne" id="compagne" name="compagne" />
           <input type="text" placeholder="Depart" id="depart" name="depart" />
           <input type="text" placeholder="Destination" id="destination" name="destination" />
-          <input type="date" placeholder="Date Depart" id="date_depart" name="date_depart" />
-
+          <input type="datetime-local" placeholder="Date Depart" id="date_depart" name="date_depart" />
           <button type="submit">Add Flight</button>
         </form>
       </div>
     </div>
-    
+
     <script>
       var a = console.log.bind(document);
       a(3 * 4);
       a("Hello!");
       a(true);
+
       function verif_Up(){
         let compagne =document.getElementById('compagne').value;
         let depart =document.getElementById('depart').value;
@@ -80,9 +83,9 @@ if (
           document.getElementById('compagne').style.color='red';
           return false;
         }
-        if (depart == '' || depart !== 'Tunes') 
+        if (depart == '' || depart !== 'Tunisie') 
         {
-        document.getElementById('depart').value = 'Le depar obliguatoire Tunes pour le moment';
+        document.getElementById('depart').value = 'Le depar obliguatoire Tunisie pour le moment';
         return false;
        }
         if (destination=='')
@@ -99,12 +102,11 @@ if (
         let currentDate = new Date();
         let inputDate = new Date(date_depart);
                 if (inputDate <= currentDate) {
-            document.getElementById('date_depart').value = 'Invalid Date Depart!';
-            document.getElementById('date_depart').style.color = 'red';
+            document.getElementById('date_depart').value = 'le date doit etre au future';
             return false;
         }
     }
-
+    
     return true;
 
 

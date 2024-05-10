@@ -3,8 +3,6 @@ include 'C:\xampp\htdocs\mcv\Controller\VolsC.php';
 include 'C:\xampp\htdocs\mcv\Model\Vols.php';
 
 $error = "";
-
-// Create an instance of the controller
 $volsC = new VolsC();
 
 if (
@@ -44,7 +42,7 @@ if (
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Flight</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="style3.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
 
 </head>
 
@@ -90,7 +88,7 @@ if (
                 <tr>
                     <td><label for="date_depart">Date Depart :</label></td>
                     <td>
-                        <input type="date" id="date_depart" name="date_depart" value="<?php echo $vol['date_depart'] ?>" /> 
+                        <input type="datetime-local" id="date_depart" name="date_depart" value="<?php echo $vol['date_depart'] ?>" /> 
                     </td>
                 </tr>
                 <td>

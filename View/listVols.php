@@ -2,6 +2,7 @@
 include 'C:\xampp\htdocs\mcv\Controller\VolsC.php';
 
 $volsC = new VolsC();
+
 $tab = $volsC->listVols();
 
 ?>
@@ -13,14 +14,18 @@ $tab = $volsC->listVols();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Flights</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="style2.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
 </head>
 <body>
 
     <h1><center><strong>-List of Flights-</strong></center></h1>
     <button onclick="location.href='addVols.php';">Add</button>
-    <button onclick="location.href='triVols.php';">trier le date</button>
-    <button onclick="location.href='statsVols.php';">stats</button>
+    <button onclick="location.href='triVols.php';">Trier le date</button>
+    <button onclick="location.href='statsVols.php';">Stats</button>
+    <button onclick="location.href='calendarDate.php';">Calendar</button>
+    <button onclick="location.href='recherchVols.php';">Recherche</button>
+
+
 
     <table border="1" align="center" width="70%">
         <tr>
